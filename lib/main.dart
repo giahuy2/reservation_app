@@ -12,6 +12,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: OnBoadingPage(),
+      onGenerateRoute: (settings) {
+        switch(settings.name){
+          case 'HomePage':{
+            return MaterialPageRoute(builder: (context) => HomePage(),);
+          }
+          case 'OnBoadingPage':{
+            return MaterialPageRoute(builder: (context) => OnBoadingPage(),);
+          }
+        }
+        return null;
+      },
     );
   }
 }
