@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: OnBoadingPage(),
+      home: HomePage(),
       onGenerateRoute: (settings) {
         switch(settings.name){
           case 'HomePage':{
