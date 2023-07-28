@@ -9,13 +9,14 @@ class HomePage extends StatelessWidget {
       onWillPop: () async {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
-              'Please stay here',
-            )));
+          'Please stay here',
+        )));
         return false;
       },
       child: Scaffold(
         backgroundColor: Color(0xFFF6EFE8),
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: Color(0xFFF6EFE8),
           title: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +41,10 @@ class HomePage extends StatelessWidget {
                   color: Colors.white, borderRadius: BorderRadius.circular(50)),
               child: IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.notifications_outlined),
+                icon: Icon(
+                  Icons.notifications_outlined,
+                  color: Colors.black,
+                ),
               ),
             )
           ],

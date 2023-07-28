@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:reservation_app/pages/components/Carousel_widget.dart';
-import 'package:reservation_app/pages/home_page.dart';
+import 'package:reservation_app/routes/route_named.dart';
+import 'package:reservation_app/utils/storage_key_management.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'components/Carousel_widget.dart';
 
-class OnBoadingPage extends StatefulWidget {
-  const OnBoadingPage({super.key});
+class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({super.key});
 
   @override
-  State<OnBoadingPage> createState() => _OnBoadingPageState();
+  State<OnBoardingPage> createState() => _OnBoardingPageState();
 }
 
-class _OnBoadingPageState extends State<OnBoadingPage> {
+class _OnBoardingPageState extends State<OnBoardingPage> {
   var _curPageIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
 
+  void _onNavigatorToHome(BuildContext context)async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(StorageKeyManager.isShownOnBoarding, true);
+
+    if(mounted){
+      Navigator.pushReplacementNamed(
+          context, RouteNamed.homePage);
+    }
+    //mounted: kiểm ttra trạng thái tồn tại của OnBoarding
+    //nếu đã tồn tại sẽ vào home luôn
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +73,7 @@ class _OnBoadingPageState extends State<OnBoadingPage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()));
+                          _onNavigatorToHome(context);
                         },
                         child: Text(
                           'SKIP',
@@ -87,10 +97,7 @@ class _OnBoadingPageState extends State<OnBoadingPage> {
                                   duration: Duration(milliseconds: 500),
                                   curve: Curves.ease);
                             default:
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                              _onNavigatorToHome(context);
                           }
                         },
                         icon: Icon(
