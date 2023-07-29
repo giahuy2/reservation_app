@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:reservation_app/components/indicator_carousel.dart';
 import 'package:reservation_app/routes/route_named.dart';
+import 'package:reservation_app/utils/assets_management.dart';
 import 'package:reservation_app/utils/storage_key_management.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'components/Carousel_widget.dart';
@@ -14,19 +16,39 @@ class OnBoardingPage extends StatefulWidget {
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
   var _curPageIndex = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  final _pageController = PageController();
 
-  void _onNavigatorToHome(BuildContext context)async{
+  final _carousels = <CarouselWidget>[
+    const CarouselWidget(
+        image: 'assets/images/Tracking_Maps.png',
+        title: 'Nearby restaurants',
+        description: 'Don\'t have to go far to find a good restaurant'),
+    const CarouselWidget(
+        image: 'assets/images/Order_illustration.png',
+        title: 'Convenient',
+        description: 'Online dish reservation'),
+    const CarouselWidget(
+        image: 'assets/images/Safe_Food.png',
+        title: 'Delicious',
+        description: 'Enjoy great food with your family'),
+  ];
+  @override
+  void dispose(){
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onNavigatorToHome(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(StorageKeyManager.isShownOnBoarding, true);
 
-    if(mounted){
-      Navigator.pushReplacementNamed(
-          context, RouteNamed.homePage);
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, RouteNamed.homePage);
     }
     //mounted: kiểm ttra trạng thái tồn tại của OnBoarding
     //nếu đã tồn tại sẽ vào home luôn
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +57,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 28.0),
-              child: Image.asset('assets/images/Logo.png'),
+              child: Image.asset(AssetsManagement.logoPath),
             ),
             Expanded(
               child: PageView(
@@ -45,21 +67,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     _curPageIndex = value;
                   });
                 },
-                children: const [
-                  CarouselWidget(
-                      image: 'assets/images/Tracking_Maps.png',
-                      title: 'Nearby restaurants',
-                      description:
-                          'Don\'t have to go far to find a good restaurant'),
-                  CarouselWidget(
-                      image: 'assets/images/Order_illustration.png',
-                      title: 'Convenient',
-                      description: 'Online dish reservation'),
-                  CarouselWidget(
-                      image: 'assets/images/Safe_Food.png',
-                      title: 'Delicious',
-                      description: 'Enjoy great food with your family'),
-                ],
+                children: _carousels,
               ),
             ),
             Padding(
@@ -106,40 +114,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       ),
                     ],
                   ),
-                  buildDot(context),
+                  IndicatorCarousel(
+                      length: _carousels.length, curPageIndex: _curPageIndex),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget buildDot(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        buildDotSeleted(context, _curPageIndex == 0),
-        SizedBox(
-          width: 8,
-        ),
-        buildDotSeleted(context, _curPageIndex == 1),
-        SizedBox(
-          width: 8,
-        ),
-        buildDotSeleted(context, _curPageIndex == 2),
-      ],
-    );
-  }
-
-  Widget buildDotSeleted(BuildContext context, bool isSelected) {
-    return Container(
-      width: 10,
-      height: 10,
-      decoration: BoxDecoration(
-        color: isSelected ? Color(0xFFAD3F32) : Colors.grey,
-        borderRadius: BorderRadius.circular(50),
       ),
     );
   }

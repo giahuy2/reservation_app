@@ -1,9 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:reservation_app/pages/home/components/banner_carousel.dart';
+import 'package:reservation_app/pages/home/components/best_seller_section.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+import '../../components/indicator_carousel.dart';
+import 'components/home_appbar.dart';
 
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -16,40 +26,7 @@ class HomePage extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: Color(0xFFF6EFE8),
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-          elevation: 0,
-          backgroundColor: Color(0xFFF6EFE8),
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.location_on_outlined,
-                color: Color(0xFFAD3F32),
-              ),
-              Text(
-                'Dong Khoi St, District 1',
-                style: TextStyle(
-                    color: Color(0xFF483332),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500),
-              )
-            ],
-          ),
-          centerTitle: true,
-          actions: [
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(50)),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications_outlined,
-                ),
-              ),
-            )
-          ],
-        ),
+        appBar: HomeAppbar(),
         drawer: Drawer(),
         body: SafeArea(
           child: Column(
@@ -77,16 +54,14 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              CarouselSlider(
-                options: CarouselOptions(height: 400.0),
-                items: [1,2,3,4,5].map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Image.asset('assets/images/Banner.png');
-                    },
-                  );
-                }).toList(),
-              )
+              SizedBox(
+                height: 10,
+              ),
+              BannerCarousel(),
+              SizedBox(
+                height: 14,
+              ),
+              BestSellerSection(),
             ],
           ),
         ),
