@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,6 +17,7 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Color(0xFFF6EFE8),
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Color(0xFFF6EFE8),
           title: const Row(
@@ -43,15 +45,50 @@ class HomePage extends StatelessWidget {
                 onPressed: () {},
                 icon: Icon(
                   Icons.notifications_outlined,
-                  color: Colors.black,
                 ),
               ),
             )
           ],
         ),
         drawer: Drawer(),
-        body: const SafeArea(
-          child: Text("Body"),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    contentPadding: EdgeInsets.symmetric(vertical: 8),
+                    hintStyle: TextStyle(
+                      fontSize: 13,
+                      color: Color(0xff999999),
+                      fontWeight: FontWeight.normal,
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Image.asset('assets/icons/Search.png'),
+                    ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10.0)),
+                  ),
+                ),
+              ),
+              CarouselSlider(
+                options: CarouselOptions(height: 400.0),
+                items: [1,2,3,4,5].map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Image.asset('assets/images/Banner.png');
+                    },
+                  );
+                }).toList(),
+              )
+            ],
+          ),
         ),
       ),
     );
