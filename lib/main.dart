@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:reservation_app/routes/route_named.dart';
 import 'package:reservation_app/routes/routes_management.dart';
 import 'package:reservation_app/utils/storage_key_management.dart';
@@ -12,6 +13,11 @@ void main() async {
   final bool? isShownOnBoarding =
       prefs.getBool(StorageKeyManager.isShownOnBoarding);
 
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  //khóa xoay màn hình
   runApp(MyApp(isShownOnBoarding: isShownOnBoarding));
 }
 

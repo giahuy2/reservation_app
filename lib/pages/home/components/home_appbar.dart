@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reservation_app/routes/route_named.dart';
+import 'package:reservation_app/utils/app_color.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget{
   const HomeAppbar({super.key});
@@ -9,12 +11,12 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget{
       iconTheme: IconThemeData(color: Colors.black),
       elevation: 0,
       backgroundColor: Color(0xFFF6EFE8),
-      title: const Row(
+      title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             Icons.location_on_outlined,
-            color: Color(0xFFAD3F32),
+            color: AppColor.red_1,
           ),
           Text(
             'Dong Khoi St, District 1',
@@ -31,7 +33,9 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget{
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(50)),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, RouteNamed.notiPage);
+            },
             icon: Icon(
               Icons.notifications_outlined,
             ),
